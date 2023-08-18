@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 export default function App() {
@@ -23,15 +23,18 @@ export default function App() {
     // setValorConvertido(URL);
   }
 
-  const limparResultado = ()=> {
-    setValorConvertido('')
+  const handleLimpar = () => {
+    setValorConvertido ('');
+    setValorOriginal("33.3333")
+    setMoedaOrigem('BRL')
+    setMoedaDestino('USD')
   }
-  
+
   return (
     <View style={styles.container}>
-      <Text>Conversor de Moedas</Text>
+      <Text style={styles.title}>Conversor de Moedas</Text>
       <View>
-        <Text>Moeda 1</Text>
+        <Text style={styles.taMoeda}>Moeda 1</Text>
         <Picker
           style={{ height: 50, width: 200 }}
           selectedValue={moedaOrigem}
@@ -44,9 +47,9 @@ export default function App() {
         </Picker>
       </View>
       <View>
-        <Text>Moeda 2</Text>
+        <Text style={styles.taMoeda}>Moeda 2</Text>
         <Picker
-          style={{ height: 50, width: 200 }}
+          style={styles.picker}
           selectedValue={moedaDestino}
           onValueChange={(itemValue, itemIndex) => setMoedaDestino(itemValue)}
         >
@@ -59,8 +62,8 @@ export default function App() {
       <View>
         <TextInput value={valorOriginal} onChangeText={setValorOriginal} keyboardType="numeric"/>
       </View>
-      <Pressable onPress={buscarHandle}><Text>Buscar Valor</Text></Pressable>
-      <Text>{`Resultado: ${valorConvertido}`}</Text>
+      <Pressable onPress={buscarHandle} style={styles.pressable}><Text>Buscar Valor</Text></Pressable>
+      <Text style={styles.laResultado}>{`Resultado: ${valorConvertido}`}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -69,8 +72,39 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  title: {
+    color: '#fff'
+  },
+  picker: {
+    color: '#fff',
+    width: 200,
+    height: 50,
+    backgroundColor: '#000'
+  },
+  input: {
+    color: '#fff',
+    textAlign: 'right',
+    height: 40,
+    width: 200
+  },
+  taMoeda: {
+    color: '#fff'
+  },
+  pressable: {
+    width: 200,
+    height: 40,
+    paddingBottom: 10,
+    backgroundColor: '#999',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5
+  },
+  laResultado: {
+    color: '#fff'
+  }
 });
