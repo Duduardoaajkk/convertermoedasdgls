@@ -16,7 +16,9 @@ export default function App() {
       let json = await page.json()
       console.log(json)
       let indice = parseFloat(json[`${moedaOrigem}${moedaDestino}`].high)
-      setValorConvertido(indice)
+      //setValorConvertido(indice)
+      let valor = parseFloat(valorOriginal)
+      setValorConvertido((indice*valor).toFixed(2))
     } catch (error) {
       setValorConvertido(`Erro: ${error.message}`)
     }
@@ -36,7 +38,7 @@ export default function App() {
       <View>
         <Text style={styles.taMoeda}>Moeda 1</Text>
         <Picker
-          style={{ height: 50, width: 200 }}
+          style={styles.picker}
           selectedValue={moedaOrigem}
           onValueChange={(itemValue, itemIndex) => setMoedaOrigem(itemValue)}
         >
@@ -60,7 +62,7 @@ export default function App() {
         </Picker>
       </View>
       <View>
-        <TextInput value={valorOriginal} onChangeText={setValorOriginal} keyboardType="numeric"/>
+        <TextInput style={styles.input} value={valorOriginal} onChangeText={setValorOriginal} keyboardType="numeric"/>
       </View>
       <Pressable onPress={buscarHandle} style={styles.pressable}><Text>Buscar Valor</Text></Pressable>
       <Text style={styles.laResultado}>{`Resultado: ${valorConvertido}`}</Text>
@@ -77,34 +79,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    color: '#fff'
+    color: '#fff',
   },
   picker: {
     color: '#fff',
     width: 200,
     height: 50,
-    backgroundColor: '#000'
+    backgroundColor: '#000', 
   },
   input: {
     color: '#fff',
-    textAlign: 'right',
     height: 40,
-    width: 200
+    width: 200,
+    textAlign: 'center',
   },
   taMoeda: {
-    color: '#fff'
+    color: '#fff',
   },
   pressable: {
     width: 200,
     height: 40,
     paddingBottom: 10,
-    backgroundColor: '#999',
+    backgroundColor: '#00FA9A',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5
+    borderRadius: 5,
   },
   laResultado: {
-    color: '#fff'
+    color: '#fff',
   }
 });
